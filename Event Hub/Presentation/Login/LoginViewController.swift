@@ -136,8 +136,7 @@ final class LoginViewController: UIViewController {
     
     private func handleLoginSuccess() {
         setLoading(false)
-        // AppCoordinator will handle this navigation
-        NotificationCenter.default.post(name: .init("LoginSuccess"), object: nil)
+        viewModel.goToEventPage()
     }
     
     private func showAlert(message: String) {

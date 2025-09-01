@@ -3,12 +3,14 @@ import Foundation
 /// ViewModel for handling login logic.
 final class LoginViewModel {
     private let authUseCase: AuthBusinessLogic
+    private let routeToEventPage: (() -> Void)?
     
     var onLoginSuccess: (() -> Void)?
     var onLoginFailure: ((String) -> Void)?
     
-    init(authUseCase: AuthBusinessLogic) {
+    init(authUseCase: AuthBusinessLogic, routeToEventPage: (() -> Void)? = nil) {
         self.authUseCase = authUseCase
+        self.routeToEventPage = routeToEventPage
     }
     
     /// Handles the login process.
@@ -30,5 +32,9 @@ final class LoginViewModel {
                 self?.onLoginFailure?(error.localizedDescription)
             }
         }
+    }
+    
+    func goToEventPage() {
+        routeToEventPage?()
     }
 }

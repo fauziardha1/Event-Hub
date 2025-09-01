@@ -25,7 +25,7 @@ final class AppRouter: AppRouting {
         self.navigationController = UINavigationController()
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-        navigationController.setNavigationBarHidden(true, animated: false)
+//        navigationController.setNavigationBarHidden(true, animated: false)
     }
 
     func start() {

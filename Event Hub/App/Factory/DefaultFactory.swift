@@ -21,11 +21,16 @@ final class DefaultFeatureFactory: FeatureFactory {
     }
     
     func makeLogin() -> UIViewController {
-        let loginVC = LoginComposer.compose()
+        let loginDependency = LoginDependency(routeToEventPage: { [weak self] in
+            guard let self = self else { return }
+            self.router.navigate(to: .eventList, from: nil)
+        })
+        let loginVC = LoginComposer.compose(with: loginDependency)
         return loginVC
     }
     
     func makeEventList() -> UIViewController {
-        return UIViewController()
+        let eventPage = EventPageComposer.compose()
+        return eventPage
     }
 }

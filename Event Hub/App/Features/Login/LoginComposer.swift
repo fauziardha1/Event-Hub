@@ -10,11 +10,21 @@ import UIKit
 final class LoginComposer {
     private init() {}
     
-    static func compose() -> UIViewController {
+    static func compose(with LoginDependency: LoginDependency) -> UIViewController {
         let repository = AuthRepositoryImpl()
         let useCase = AuthUsecase(authRepository: repository)
-        let viewModel = LoginViewModel(authUseCase: useCase)
+        let viewModel = LoginViewModel(authUseCase: useCase, routeToEventPage: LoginDependency.routeToEventPage)
         let controller = LoginViewController(viewModel: viewModel)
         return controller
     }
+}
+
+
+struct LoginDependency {
+    let routeToEventPage: () -> Void
+    
+    init(routeToEventPage: @escaping () -> Void) {
+        self.routeToEventPage = routeToEventPage
+    }
+    
 }
