@@ -42,6 +42,13 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     // MARK: - Initialization
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
@@ -67,6 +74,7 @@ final class LoginViewController: UIViewController {
         view.addSubview(emailField)
         view.addSubview(passwordField)
         view.addSubview(loginButton)
+        view.addSubview(loadingIndicator)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
@@ -86,7 +94,10 @@ final class LoginViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 32),
             loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            loginButton.heightAnchor.constraint(equalToConstant: 50)
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            loadingIndicator.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor)
         ])
     }
     
@@ -105,18 +116,32 @@ final class LoginViewController: UIViewController {
     // MARK: - Actions
     @objc private func loginButtonTapped() {
         guard let email = emailField.text, let password = passwordField.text else { return }
-        loginButton.isEnabled = false
+        setLoading(true)
         viewModel.login(username: email, password: password)
     }
     
+    private func setLoading(_ isLoading: Bool) {
+        loginButton.isEnabled = !isLoading
+        emailField.isEnabled = !isLoading
+        passwordField.isEnabled = !isLoading
+        
+        if isLoading {
+            loadingIndicator.startAnimating()
+            loginButton.setTitle("", for: .normal)
+        } else {
+            loadingIndicator.stopAnimating()
+            loginButton.setTitle("Log In", for: .normal)
+        }
+    }
+    
     private func handleLoginSuccess() {
-        loginButton.isEnabled = true
+        setLoading(false)
         // AppCoordinator will handle this navigation
         NotificationCenter.default.post(name: .init("LoginSuccess"), object: nil)
     }
     
     private func showAlert(message: String) {
-        loginButton.isEnabled = true
+        setLoading(false)
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
