@@ -40,16 +40,15 @@ class EventListViewModel {
     }
     
     private func sortEvents(_ events: [EventEntity]) -> [EventEntity] {
-//        // Sort events by date, putting upcoming events first
-//        return events.sorted { event1, event2 in
-//            // If both are upcoming or both are past, sort by date
-//            if event1.isUpcoming == event2.isUpcoming {
-//                return event1.startDate < event2.startDate
-//            }
-//            // Put upcoming events first
-//            return event1.isUpcoming && !event2.isUpcoming
-//        }
-        []
+        // Sort events by date, putting upcoming events first
+        return events.sorted { event1, event2 in
+            // If both are upcoming or both are past, sort by date
+            if event1.isUpcoming == event2.isUpcoming {
+                return event1.startDate < event2.startDate
+            }
+            // Put upcoming events first
+            return event1.isUpcoming && !event2.isUpcoming
+        }
     }
     
     func logout() {

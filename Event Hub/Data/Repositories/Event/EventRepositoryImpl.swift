@@ -10,10 +10,11 @@ class EventRepositoryImpl: EventRepository {
     
     func getEvents(completion: @escaping (Either<[EventEntity], Error>) -> Void) {
         let context = persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<Event>(entityName: "EventModel")
+        let fetchRequest = NSFetchRequest<Event>(entityName: "Event")
         
         do {
             let eventModels = try context.fetch(fetchRequest)
+            guard !eventModels.isEmpty else { insertSampleEvents(); return }
             let events: [EventEntity] = eventModels.compactMap { model in
                 
                 if model.id == nil && model.name == nil && model.organizer == nil && model.location == nil {
