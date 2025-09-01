@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import CoreData
 
 final class EventPageComposer {
     private init() {}
     
     static func compose() -> UIViewController {
-        let controller = EventListViewController(viewModel: EventListViewModel())
+        let coreDataContainer = CoreDataManager.shared.persistentContainer
+        let repository = EventRepositoryImpl(persistentContainer: coreDataContainer)
+        let useCase = EventUsecase(eventRepository: repository)
+        let viewmodel = EventListViewModel(eventUseCase: useCase)
+        let controller = EventListViewController(viewModel: viewmodel)
         return controller
     }
 }
