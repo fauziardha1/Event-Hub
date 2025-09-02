@@ -47,7 +47,7 @@ class CreateEventViewModel {
         
         do {
             try data.write(to: fileURL)
-            return fileURL.path
+            return filename
         } catch {
             print("Error saving image: \(error)")
             return nil

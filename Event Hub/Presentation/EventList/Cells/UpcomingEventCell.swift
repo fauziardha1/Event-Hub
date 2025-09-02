@@ -136,8 +136,14 @@ class UpcomingEventCell: UITableViewCell {
         descriptionLabel.text = event.description
         
         // Load image if available
-        if let thumbnailUrl = event.thumbnailPath, let url = URL(string: thumbnailUrl) {
-            // Implement image loading here
+        if let thumbnailUrl = event.thumbnailPath, let image = loadImage(name: thumbnailUrl) {
+            self.thumbnailImageView.image = image
         }
+    }
+    
+    private func loadImage(name imageName: String) -> UIImage? {
+        let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = directory.appendingPathComponent(imageName)
+        return UIImage(contentsOfFile: fileURL.path)
     }
 }
