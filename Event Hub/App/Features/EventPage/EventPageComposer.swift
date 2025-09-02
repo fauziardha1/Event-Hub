@@ -16,7 +16,7 @@ final class EventPageComposer {
         let coreDataContainer = CoreDataManager.shared.persistentContainer
         let repository = EventRepositoryImpl(persistentContainer: coreDataContainer)
         let useCase = EventUsecase(eventRepository: repository)
-        let viewmodel = EventListViewModel(eventUseCase: useCase, showFormAction: dependency.showFormAction)
+        let viewmodel = EventListViewModel(eventUseCase: useCase, showFormAction: dependency.showFormAction, navigateToLogoutConfirmation: dependency.showLogoutConfirmation)
         let controller = EventListViewController(viewModel: viewmodel)
         self.triggerRefreshEventList = viewmodel.triggerRefreshFromOutside
         return controller
@@ -24,10 +24,11 @@ final class EventPageComposer {
 }
 
 struct EventPageDependency {
-    // Add dependencies if needed in the future
     let showFormAction: () -> Void
+    let showLogoutConfirmation: () -> Void
     
-    init(showFormAction: @escaping () -> Void) {
+    init(showFormAction: @escaping () -> Void, showLogoutConfirmation: @escaping () -> Void) {
         self.showFormAction = showFormAction
+        self.showLogoutConfirmation = showLogoutConfirmation
     }
 }

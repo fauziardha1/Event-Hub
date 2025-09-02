@@ -37,4 +37,8 @@ final class LoginViewModel {
     func goToEventPage() {
         routeToEventPage?()
     }
+    
+    func logout() {
+    }
+        
 }

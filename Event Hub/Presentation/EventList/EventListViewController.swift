@@ -174,14 +174,7 @@ class EventListViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
-        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Logout", style: .destructive) { [weak self] _ in
-            self?.viewModel.logout()
-        })
-        
-        present(alert, animated: true)
+        viewModel.logout()
     }
     
     @objc private func addEventButtonTapped() {

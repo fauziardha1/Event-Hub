@@ -25,7 +25,6 @@ final class AppRouter: AppRouting {
         self.navigationController = UINavigationController()
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-//        navigationController.setNavigationBarHidden(true, animated: false)
     }
 
     func start() {
@@ -46,11 +45,16 @@ final class AppRouter: AppRouting {
         case .eventList:
             let eventListPage = factory.makeEventList()
             navigationController.setViewControllers([eventListPage], animated: true)
+            
         case .createEvent:
             let createEventPage = factory.makeCreateEvent()
             let topViewController = navigationController.topViewController // get top most view controller
             navigationController.showDetailViewController(createEventPage, sender: topViewController)
-//            navigationController.pushViewController(createEventPage, animated: true)
+            
+        case .logout:
+            let logoutConfirmationpage = factory.makeLogoutConfirmation()
+            let topViewController = navigationController.topViewController // get top most view controller
+            navigationController.showDetailViewController(logoutConfirmationpage, sender: topViewController)
         }
     }
 }

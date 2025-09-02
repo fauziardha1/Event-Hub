@@ -11,7 +11,7 @@ protocol FeatureFactory {
     func makeLogin() -> UIViewController
     func makeEventList() -> UIViewController
     func makeCreateEvent() -> UIViewController
-    // add other features if needed
+    func makeLogoutConfirmation() -> UIViewController
 }
 
 final class DefaultFeatureFactory: FeatureFactory {
@@ -34,6 +34,9 @@ final class DefaultFeatureFactory: FeatureFactory {
         let eventPageDependency = EventPageDependency(showFormAction: { [weak self] in
             guard let self = self else { return }
             self.router.navigate(to: .createEvent, from: nil)
+        }, showLogoutConfirmation: { [weak self] in
+            guard let self = self else { return }
+            self.router.navigate(to: .logout, from: nil)
         })
         let eventPage = EventPageComposer.compose(dependency: eventPageDependency)
         return eventPage
@@ -45,5 +48,14 @@ final class DefaultFeatureFactory: FeatureFactory {
         })
         let createEventPage = CreateEventComposer.compose(withDependency: createEventDependency)
         return createEventPage
+    }
+    
+    func makeLogoutConfirmation() -> UIViewController {
+        let logoutDependency = LogoutDependency(routeToLogin: { [weak self] in
+            guard let self = self else { return }
+            self.router.navigate(to: .login, from: nil)
+        })
+        let logoutConfirmationPage = LogoutComposer.compose(withDependency: logoutDependency)
+        return logoutConfirmationPage
     }
 }

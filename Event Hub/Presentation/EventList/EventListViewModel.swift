@@ -11,6 +11,7 @@ class EventListViewModel {
     private let eventUseCase: EventBusinessLogic
     private let showFormAction: () -> Void
     private(set) var triggerRefreshFromOutside: () -> Void = {}
+    private let  navigateToLogoutConfirmation: () -> Void
     
     var events: [EventEntity] = []
     var onEventsUpdated: (() -> Void)?
@@ -23,9 +24,10 @@ class EventListViewModel {
         return events.first { $0.isUpcoming }
     }
     
-    init(eventUseCase: EventBusinessLogic, showFormAction: @escaping () -> Void) {
+    init(eventUseCase: EventBusinessLogic, showFormAction: @escaping () -> Void, navigateToLogoutConfirmation: @escaping () -> Void) {
         self.eventUseCase = eventUseCase
         self.showFormAction = showFormAction
+        self.navigateToLogoutConfirmation = navigateToLogoutConfirmation
         self.triggerRefreshFromOutside = { [weak self] in
             guard let self else {return}
             self.fetchEvents()
@@ -59,17 +61,7 @@ class EventListViewModel {
     }
     
     func logout() {
-//        authRepository.logout { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success:
-//                DispatchQueue.main.async {
-//                    self.router.navigate(to: .login)
-//                }
-//            case .failure(let error):
-//                print("Error logging out: \(error)")
-//            }
-//        }
+        navigateToLogoutConfirmation()
     }
     
     func navigateToCreateEvent() {
