@@ -264,6 +264,7 @@ class CreateEventViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
+                    self?.viewModel.refreshEventListData()
                     self?.dismiss(animated: true)
                 case .failure(let error):
                     self?.showAlert(message: error.localizedDescription)

@@ -40,7 +40,10 @@ final class DefaultFeatureFactory: FeatureFactory {
     }
     
     func makeCreateEvent() -> UIViewController {
-        let createEventPage = CreateEventComposer.compose()
+        let createEventDependency = CreateEventDependency(refreshEventListAction: {
+            EventPageComposer.triggerRefreshEventList?()
+        })
+        let createEventPage = CreateEventComposer.compose(withDependency: createEventDependency)
         return createEventPage
     }
 }

@@ -3,9 +3,11 @@ import UIKit
 
 class CreateEventViewModel {
     private let eventRepository: EventRepository
+    private let refreshEventList: () -> Void
     
-    init(eventRepository: EventRepository) {
+    init(eventRepository: EventRepository, refreshEventList: @escaping () -> Void) {
         self.eventRepository = eventRepository
+        self.refreshEventList = refreshEventList
     }
     
     func createEvent(_ event: EventEntity, image: UIImage?, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -50,6 +52,10 @@ class CreateEventViewModel {
             print("Error saving image: \(error)")
             return nil
         }
+    }
+    
+    func refreshEventListData() {
+        refreshEventList()
     }
 }
 

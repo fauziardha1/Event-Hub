@@ -10,6 +10,7 @@ import Foundation
 class EventListViewModel {
     private let eventUseCase: EventBusinessLogic
     private let showFormAction: () -> Void
+    private(set) var triggerRefreshFromOutside: () -> Void = {}
     
     var events: [EventEntity] = []
     var onEventsUpdated: (() -> Void)?
@@ -22,9 +23,13 @@ class EventListViewModel {
         return events.first { $0.isUpcoming }
     }
     
-    init(eventUseCase: EventBusinessLogic, showFormAction: @escaping () -> Void ) {
+    init(eventUseCase: EventBusinessLogic, showFormAction: @escaping () -> Void) {
         self.eventUseCase = eventUseCase
         self.showFormAction = showFormAction
+        self.triggerRefreshFromOutside = { [weak self] in
+            guard let self else {return}
+            self.fetchEvents()
+        }
     }
     
     func fetchEvents() {

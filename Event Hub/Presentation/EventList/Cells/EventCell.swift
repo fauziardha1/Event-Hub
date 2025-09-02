@@ -67,10 +67,10 @@ class EventCell: UITableViewCell {
         containerView.addSubview(locationLabel)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),

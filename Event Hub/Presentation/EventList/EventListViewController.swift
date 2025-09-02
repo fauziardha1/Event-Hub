@@ -222,4 +222,8 @@ extension EventListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.section == 0 ? UITableView.automaticDimension : 100
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Upcoming Event" : "Other Events"
+    }
 }

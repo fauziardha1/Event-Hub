@@ -10,6 +10,7 @@ import CoreData
 
 final class EventPageComposer {
     private init() {}
+    static var triggerRefreshEventList: (() -> Void)?
     
     static func compose(dependency: EventPageDependency) -> UIViewController {
         let coreDataContainer = CoreDataManager.shared.persistentContainer
@@ -17,6 +18,7 @@ final class EventPageComposer {
         let useCase = EventUsecase(eventRepository: repository)
         let viewmodel = EventListViewModel(eventUseCase: useCase, showFormAction: dependency.showFormAction)
         let controller = EventListViewController(viewModel: viewmodel)
+        self.triggerRefreshEventList = viewmodel.triggerRefreshFromOutside
         return controller
     }
 }
