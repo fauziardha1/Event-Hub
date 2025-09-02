@@ -33,11 +33,11 @@ extension Event {
                 EventEntity(
                     id: $0.id ?? "",
                     name: $0.name ?? "",
+                    description: $0.eventDescription ?? "",
+                    location: $0.location ?? "",
                     startDate: $0.startDate ?? Date(),
                     endDate: $0.endDate ?? Date(),
                     organizer: $0.organizer ?? "",
-                    location: $0.location ?? "",
-                    description: $0.eventDescription ?? "",
                     thumbnailPath: $0.thumbnailPath
                 )
             }

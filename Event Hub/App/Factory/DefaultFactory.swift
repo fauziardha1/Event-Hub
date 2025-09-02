@@ -10,6 +10,7 @@ import UIKit
 protocol FeatureFactory {
     func makeLogin() -> UIViewController
     func makeEventList() -> UIViewController
+    func makeCreateEvent() -> UIViewController
     // add other features if needed
 }
 
@@ -30,7 +31,16 @@ final class DefaultFeatureFactory: FeatureFactory {
     }
     
     func makeEventList() -> UIViewController {
-        let eventPage = EventPageComposer.compose()
+        let eventPageDependency = EventPageDependency(showFormAction: { [weak self] in
+            guard let self = self else { return }
+            self.router.navigate(to: .createEvent, from: nil)
+        })
+        let eventPage = EventPageComposer.compose(dependency: eventPageDependency)
         return eventPage
+    }
+    
+    func makeCreateEvent() -> UIViewController {
+        let createEventPage = CreateEventComposer.compose()
+        return createEventPage
     }
 }

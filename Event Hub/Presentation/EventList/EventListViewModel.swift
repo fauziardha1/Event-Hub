@@ -9,6 +9,7 @@ import Foundation
 
 class EventListViewModel {
     private let eventUseCase: EventBusinessLogic
+    private let showFormAction: () -> Void
     
     var events: [EventEntity] = []
     var onEventsUpdated: (() -> Void)?
@@ -21,8 +22,9 @@ class EventListViewModel {
         return events.first { $0.isUpcoming }
     }
     
-    init(eventUseCase: EventBusinessLogic) {
+    init(eventUseCase: EventBusinessLogic, showFormAction: @escaping () -> Void ) {
         self.eventUseCase = eventUseCase
+        self.showFormAction = showFormAction
     }
     
     func fetchEvents() {
@@ -66,6 +68,6 @@ class EventListViewModel {
     }
     
     func navigateToCreateEvent() {
-//        router.navigate(to: .createEvent)
+        showFormAction()
     }
 }

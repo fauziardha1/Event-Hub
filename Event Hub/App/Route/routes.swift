@@ -8,5 +8,6 @@
 public enum AppRoute {
     case login
     case eventList
+    case createEvent
     // Add more cases as app grows
 }

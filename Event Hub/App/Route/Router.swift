@@ -46,6 +46,11 @@ final class AppRouter: AppRouting {
         case .eventList:
             let eventListPage = factory.makeEventList()
             navigationController.setViewControllers([eventListPage], animated: true)
+        case .createEvent:
+            let createEventPage = factory.makeCreateEvent()
+            let topViewController = navigationController.topViewController // get top most view controller
+            navigationController.showDetailViewController(createEventPage, sender: topViewController)
+//            navigationController.pushViewController(createEventPage, animated: true)
         }
     }
 }

@@ -33,12 +33,21 @@ class EventRepositoryImpl: EventRepository {
     func createEvent(_ event: EventEntity, completion: @escaping (Result<Void, Error>) -> Void) {
         let context = persistentContainer.viewContext
         
-        let _ = Event(context: context).createEvent(from: event)
+        let eventEntity = Event(context: context)
+        eventEntity.id = event.id
+        eventEntity.name = event.name
+        eventEntity.eventDescription = event.description
+        eventEntity.location = event.location
+        eventEntity.startDate = event.startDate
+        eventEntity.endDate = event.endDate
+        eventEntity.organizer = event.organizer
+        eventEntity.thumbnailPath = event.thumbnailPath
         
         do {
             try context.save()
             completion(.success(()))
         } catch {
+            context.rollback()
             completion(.failure(error))
         }
     }
@@ -48,32 +57,40 @@ class EventRepositoryImpl: EventRepository {
         let samples: [EventEntity] = [
             EventEntity(
                 id: UUID().uuidString,
+                name: "Tech Meetup 2025",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                location: "New York, USA",
+                startDate: Date().addingTimeInterval(259200),
+                endDate: Date().addingTimeInterval(259200 + 3600),
+                organizer: "Tech Events Co."),
+            EventEntity(
+                id: UUID().uuidString,
                 name: "iOS Dev Conference",
-                startDate: Date().addingTimeInterval(86400), // tomorrow
-                endDate: Date().addingTimeInterval(172800),  // day after
-                organizer: "Swift Community",
-                location: "Tokyo, Japan",
-                description: "Annual iOS and Swift developers meetup.",
+                description: "Swift Community", // tomorrow
+                location: "Tokyo, Japan",  // day after
+                startDate: Date().addingTimeInterval(86400),
+                endDate: Date().addingTimeInterval(172800),
+                organizer: "Annual iOS and Swift developers meetup.",
                 thumbnailPath: nil
             ),
             EventEntity(
                 id: UUID().uuidString,
                 name: "Startup Pitch Night",
+                description: "Pitch your startup idea in front of investors.",
+                location: "Jakarta, Indonesia",
                 startDate: Date().addingTimeInterval(259200), // 3 days later
                 endDate: Date().addingTimeInterval(259200 + 3600),
                 organizer: "Tech Hub",
-                location: "Jakarta, Indonesia",
-                description: "Pitch your startup idea in front of investors.",
                 thumbnailPath: nil
             ),
             EventEntity(
                 id: UUID().uuidString,
                 name: "Music Festival",
+                description: "Outdoor music festival with multiple bands.",
+                location: "Singapore",
                 startDate: Date().addingTimeInterval(604800), // 1 week later
                 endDate: Date().addingTimeInterval(604800 + 7200),
                 organizer: "Live Nation",
-                location: "Singapore",
-                description: "Outdoor music festival with multiple bands.",
                 thumbnailPath: "festival.jpg"
             )
         ]
