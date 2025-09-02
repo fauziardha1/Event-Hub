@@ -196,12 +196,11 @@ class CreateEventViewController: UIViewController {
             startDatePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             startDatePicker.heightAnchor.constraint(equalToConstant: 44),
             
-            endDatePicker.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 16),
-            endDatePicker.leadingAnchor.constraint(equalTo: startDatePicker.trailingAnchor, constant: 16),
-            endDatePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            endDatePicker.topAnchor.constraint(equalTo: startDatePicker.bottomAnchor, constant: 16),
+            endDatePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             endDatePicker.heightAnchor.constraint(equalToConstant: 44),
             
-            organizerTextField.topAnchor.constraint(equalTo: startDatePicker.bottomAnchor, constant: 16),
+            organizerTextField.topAnchor.constraint(equalTo: endDatePicker.bottomAnchor, constant: 16),
             organizerTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             organizerTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             organizerTextField.heightAnchor.constraint(equalToConstant: 44),
