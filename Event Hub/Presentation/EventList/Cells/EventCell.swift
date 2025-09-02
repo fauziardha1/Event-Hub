@@ -67,27 +67,23 @@ class EventCell: UITableViewCell {
         containerView.addSubview(locationLabel)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
-            startDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            startDateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            startDateLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             startDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
-            organizerLabel.topAnchor.constraint(equalTo: startDateLabel.bottomAnchor, constant: 4),
-            organizerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            organizerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            organizerLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            organizerLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            organizerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             
-            locationLabel.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 4),
-            locationLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            locationLabel.topAnchor.constraint(equalTo: startDateLabel.bottomAnchor, constant: 4),
             locationLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            locationLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
         ])
     }
     

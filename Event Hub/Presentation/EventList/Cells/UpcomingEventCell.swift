@@ -54,23 +54,7 @@ class UpcomingEventCell: UITableViewCell {
         return label
     }()
     
-    private let endDateLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let organizerLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let locationLabel: UILabel = {
+    private let organizerAndLocationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
@@ -105,9 +89,7 @@ class UpcomingEventCell: UITableViewCell {
         containerView.addSubview(thumbnailImageView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(startDateLabel)
-        containerView.addSubview(endDateLabel)
-        containerView.addSubview(organizerLabel)
-        containerView.addSubview(locationLabel)
+        containerView.addSubview(organizerAndLocationLabel)
         containerView.addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
@@ -132,45 +114,30 @@ class UpcomingEventCell: UITableViewCell {
             
             startDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             startDateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            startDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
-            endDateLabel.topAnchor.constraint(equalTo: startDateLabel.bottomAnchor, constant: 4),
-            endDateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            endDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            organizerAndLocationLabel.topAnchor.constraint(equalTo: startDateLabel.bottomAnchor, constant: 8),
+            organizerAndLocationLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            organizerAndLocationLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
-            organizerLabel.topAnchor.constraint(equalTo: endDateLabel.bottomAnchor, constant: 8),
-            organizerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            organizerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            
-            locationLabel.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 4),
-            locationLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            locationLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
+            descriptionLabel.topAnchor.constraint(equalTo: organizerAndLocationLabel.bottomAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             descriptionLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ])
     }
     
-//    func configure(with event: EventEntity) {
-//        titleLabel.text = event.name
-//        
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MMM d, yyyy, h:mm a"
-//        
-//        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
-//        if let endDate = event.dateEnd {
-//            endDateLabel.text = "End: \(dateFormatter.string(from: endDate))"
-//        }
-//        
-//        organizerLabel.text = "By \(event.organizer)"
-//        locationLabel.text = "📍 \(event.location)"
-//        descriptionLabel.text = event.description
-//        
-//        // Load image if available
-//        if let thumbnailUrl = event.thumbnailUrl {
-//            // Implement image loading here
-//        }
-//    }
+    func configure(with event: EventEntity) {
+        titleLabel.text = event.name
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy, h:mm a"
+        startDateLabel.text = "\(dateFormatter.string(from: event.startDate)) - \(dateFormatter.string(from: event.endDate))"
+        organizerAndLocationLabel.text = "\(event.organizer) * \(event.location)"
+        descriptionLabel.text = event.description
+        
+        // Load image if available
+        if let thumbnailUrl = event.thumbnailPath, let url = URL(string: thumbnailUrl) {
+            // Implement image loading here
+        }
+    }
 }

@@ -204,11 +204,12 @@ extension EventListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && viewModel.hasUpcomingEvent {
-            let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingEventCell.identifier, for: indexPath) as! UpcomingEventCell
-//            cell.configure(with: viewModel.upcomingEvent!)
+            let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingEventCell.identifier, for: indexPath) as? UpcomingEventCell ?? UpcomingEventCell()
+            guard let upcomingEvent = viewModel.upcomingEvent else { return cell }
+            cell.configure(with: upcomingEvent)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: EventCell.identifier, for: indexPath) as! EventCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: EventCell.identifier, for: indexPath) as? EventCell ?? EventCell()
             let event = viewModel.events[indexPath.row + (viewModel.hasUpcomingEvent ? 1 : 0)]
             cell.configure(with: event)
             return cell
@@ -219,6 +220,6 @@ extension EventListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension EventListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? UITableView.automaticDimension : 120
+        return indexPath.section == 0 ? UITableView.automaticDimension : 100
     }
 }

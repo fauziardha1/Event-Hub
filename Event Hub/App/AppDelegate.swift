@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appRouter = AppRouter(window: window)
         let factory = DefaultFeatureFactory(router: appRouter)
         appRouter.factory = factory
-        appRouter.start()
+        appRouter.navigate(to: .eventList)
         return true
     }
 
